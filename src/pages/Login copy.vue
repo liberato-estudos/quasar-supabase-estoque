@@ -49,31 +49,39 @@
 }
 </style>
 
-<script setup>
-import { ref } from 'vue'
+<script>
+import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import useAuthUser from 'src/composables/UseAuthUser'
 
-const router = useRouter()
-const { login } = useAuthUser()
+export default defineComponent({
+  name: 'PageLogin',
 
-const form = ref({
-  email: '',
-  password: ''
-})
+  setup() {
+    const router = useRouter()
 
-const handleLogin = async () => {
-  try {
-    console.log("login")
-    await login(form.value)
-    router.push({ name: 'me' })
-  } catch (error) {
-    alert(error.message)
+    const { login } = useAuthUser()
 
+    const form = ref({
+      email: '',
+      password: ''
+    })
+
+    const handleLogin = async () => {
+      try {
+        await login(form.value)
+        router.push({ name: 'me' })
+      } catch (error) {
+        alert(error.message)
+
+      }
+    }
+
+    return {
+      form,
+      handleLogin
+    }
   }
-}
 
-
-
-
+})
 </script>

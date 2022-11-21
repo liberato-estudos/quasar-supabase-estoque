@@ -1,4 +1,4 @@
-import useAuthUser from '@/composables/UseAuthUser'
+import useAuthUser from 'src/composables/UseAuthUser'
 
 const routes = [
   {

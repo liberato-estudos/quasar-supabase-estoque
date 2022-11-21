@@ -55,8 +55,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import useAuthUser from '@/composables/UseAuthUser'
-import useNotify from '@/composables/UseNotify'
+import useAuthUser from 'src/composables/UseAuthUser'
+import useNotify from 'src/composables/UseNotify'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

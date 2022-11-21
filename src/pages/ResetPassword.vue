@@ -19,9 +19,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import useAuthUser from '@/composables/UseAuthUser';
 import { useRouter, useRoute } from 'vue-router'
-import useNotify from '@/composables/UseNotify'
+import useAuthUser from 'src/composables/UseAuthUser';
+import useNotify from 'src/composables/UseNotify'
 
 const { resetPassword } = useAuthUser()
 const { notifyError, notifySuccess } = useNotify()

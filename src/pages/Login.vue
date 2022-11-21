@@ -53,8 +53,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import useAuthUser from '@/composables/UseAuthUser'
-import useNotify from '@/composables/UseNotify'
+import useAuthUser from 'src/composables/UseAuthUser'
+import useNotify from 'src/composables/UseNotify'
 
 const router = useRouter()
 const { login, isLoggedIn } = useAuthUser()

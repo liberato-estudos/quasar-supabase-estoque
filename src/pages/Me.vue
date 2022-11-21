@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import useAuthUser from '../composables/UseAuthUser';
+import useAuthUser from '@/composables/UseAuthUser';
 
 const { user } = useAuthUser()
 </script>

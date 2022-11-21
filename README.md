@@ -159,3 +159,7 @@ Alterar o vueRouterMode
 ```
 vueRouterMode: 'hash', // available values: 'hash', 'history'
 ```
+## Plugins
+
+Dialog
+https://quasar.dev/quasar-plugins/dialog

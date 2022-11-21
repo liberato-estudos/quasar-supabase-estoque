@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div v-if="user">
+      <p>Olá {{ user.user_metadata.name }}</p>
       <p>Olá {{ user.email }}</p>
       <p>Olá {{ user }}</p>
 

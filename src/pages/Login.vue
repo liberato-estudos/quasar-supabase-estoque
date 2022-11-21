@@ -3,13 +3,14 @@
     <q-form class="row justify-center" @submit.prevent="handleLogin">
       <p class="col-12 text-h5 text-center">Login</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <q-input label="Email" v-model="form.email" outlined />
-        <q-input label="Password" v-model="form.password" outlined />
+        <q-input label="Email" v-model="form.email" type="email" outlined lazy-rules :rules="validacaoEmail"/>
+        <q-input label="Password" v-model="form.password" type="password" outlined lazy-rules :rules="validacaoPassword"/>
         <div class="full-width q-pt-md">
           <q-btn label="Login" color="primary" class="full-width" size="lg" type="submit" />
         </div>
-        <div class="full-width">
-          <q-btn label="Register" color="primary" class="full-width" flat size="lg" to="/register" />
+        <div class="full-width q-gutter-y-sm">
+          <q-btn label="Cadastrar" color="primary" class="full-width" flat size="md" to="/register" />
+          <q-btn label="Esqueci a senha" color="primary" class="full-width" flat size="md" :to="{name:'forgot-password'}" />
         </div>
       </div>
     </q-form>
@@ -50,25 +51,40 @@
 </style>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import useAuthUser from 'src/composables/UseAuthUser'
+import useNotify from 'src/composables/UseNotify'
 
 const router = useRouter()
-const { login } = useAuthUser()
+const { login, isLoggedIn } = useAuthUser()
+const {notifySuccess, notifyError} = useNotify()
 
 const form = ref({
   email: '',
   password: ''
 })
 
+// VALIDAÇÃO
+const validacaoEmail = [val => (val && val.length > 0) || 'E-mail é obrigatório']
+const validacaoPassword = [val => (val && val.length >= 6) || 'A senha precisa ter no mínimo 6 caracteres']
+
+
+
+onMounted(() => {
+  if (isLoggedIn) {
+    router.push({ name: 'me' })
+  }
+})
+
 const handleLogin = async () => {
   try {
-    console.log("login")
+
     await login(form.value)
+    notifySuccess('Autenticado com sucesso!')
     router.push({ name: 'me' })
   } catch (error) {
-    alert(error.message)
+    notifyError(error.message)
 
   }
 }

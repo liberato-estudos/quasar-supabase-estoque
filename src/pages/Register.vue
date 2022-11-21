@@ -1,20 +1,23 @@
+<!-- Referência -->
+<!-- https://quasar.dev/vue-components/input#internal-validation -->
+
 <template>
   <q-page padding>
     <q-form class="row justify-center" @submit.prevent="handleRegister">
-      <p class="col-12 text-h5 text-center"> Register </p>
+      <p class="col-12 text-h5 text-center"> Registro </p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
-          label="Name"
+          label="Nome"
           v-model="form.name"
           lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Name is required']"
+          :rules="validacaoNome"
         />
 
         <q-input
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Email is required']"
+          :rules="validacaoEmail"
           type="email"
         />
 
@@ -22,12 +25,13 @@
           label="Password"
           v-model="form.password"
           lazy-rules
-          :rules="[val => (val && val.length >= 6) || 'Password is required and 6 characters']"
+          :rules="validacaoPassword"
+          type="password"
         />
 
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
-            label="Register"
+            label="Cadastrar"
             color="primary"
             class="full-width"
             outline
@@ -36,7 +40,7 @@
           />
 
           <q-btn
-            label="Back"
+            label="Voltar"
             color="dark"
             class="full-width"
             rounded
@@ -49,43 +53,39 @@
   </q-page>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import useAuthUser from 'src/composables/UseAuthUser'
 import useNotify from 'src/composables/UseNotify'
 import { useRouter } from 'vue-router'
 
-export default defineComponent({
-  name: 'PageRegister',
+const router = useRouter()
+const { register } = useAuthUser()
+const { notifyError, notifySuccess } = useNotify()
 
-  setup () {
-    const router = useRouter()
-    const { register } = useAuthUser()
-    const { notifyError, notifySuccess } = useNotify()
-
-    const form = ref({
-      name: '',
-      email: '',
-      password: ''
-    })
-
-    const handleRegister = async () => {
-      try {
-        await register(form.value)
-        // notifySuccess()
-        router.push({
-          name: 'email-confirmation',
-          query: { email: form.value.email }
-        })
-      } catch (error) {
-        // notifyError(error.message)
-      }
-    }
-
-    return {
-      form,
-      handleRegister
-    }
-  }
+const form = ref({
+  name: '',
+  email: '',
+  password: ''
 })
+
+// VALIDAÇÃO
+const validacaoNome = [val => (val && val.length > 0) || 'Nome é obrigatório']
+const validacaoEmail = [val => (val && val.length > 0) || 'E-mail é obrigatório']
+const validacaoPassword = [val => (val && val.length >= 6) || 'A senha precisa ter no mínimo 6 caracteres']
+
+
+const handleRegister = async () => {
+  try {
+    await register(form.value)
+    notifySuccess("Cadastro realizado com sucesso")
+    // Envia para a página de confirmação de email
+    router.push({
+      name: 'email-confirmation',
+      query: { email: form.value.email }
+    })
+  } catch (error) {
+    notifyError(error.message)
+  }
+}
 </script>

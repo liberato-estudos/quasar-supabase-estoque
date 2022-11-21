@@ -42,7 +42,7 @@ import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useRouter } from 'vue-router'
-import useAuthUser from '@/composables/UseAuthUser'
+import useAuthUser from '../composables/UseAuthUser'
 
 const linksList = [
   {

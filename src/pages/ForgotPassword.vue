@@ -21,8 +21,8 @@
 <script setup>
 
 import { ref } from 'vue'
-import useAuthUser from '@/composables/UseAuthUser';
-import useNotify from '@/composables/UseNotify'
+import useAuthUser from '../composables/UseAuthUser';
+import useNotify from '../composables/UseNotify'
 
 const email = ref('')
 const { sendPasswordRestEmail } = useAuthUser()

@@ -1,9 +1,9 @@
 <template>
   <q-item
     clickable
-    tag="a"
-    target="_blank"
-    :href="link"
+    :to="{ name: routeName }"
+    exact
+    active-class="my-menu-link"
   >
     <q-item-section
       v-if="icon"
@@ -14,14 +14,15 @@
 
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label caption>
+        {{ caption }}
+      </q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-
 export default defineComponent({
   name: 'EssentialLink',
   props: {
@@ -29,17 +30,14 @@ export default defineComponent({
       type: String,
       required: true
     },
-
     caption: {
       type: String,
       default: ''
     },
-
-    link: {
+    routeName: {
       type: String,
-      default: '#'
+      default: ''
     },
-
     icon: {
       type: String,
       default: ''
@@ -47,3 +45,12 @@ export default defineComponent({
   }
 })
 </script>
+
+
+<style scoped>
+.my-menu-link{
+  background: rgba(155, 155, 155, 0.2);
+  color: black;
+
+}
+</style>

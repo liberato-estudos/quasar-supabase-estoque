@@ -58,13 +58,13 @@ const linksList = [
     routeName: 'me'
   },
   {
-    title: 'Category',
+    title: 'Categoria',
     caption: '',
     icon: 'mdi-shape-outline',
     routeName: 'category'
   },
   {
-    title: 'Product',
+    title: 'Produto',
     caption: '',
     icon: 'mdi-archive',
     routeName: 'product'

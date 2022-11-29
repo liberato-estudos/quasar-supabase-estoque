@@ -1,5 +1,8 @@
 # Quasar App (quasar-supabase-estoque)
 
+Repositório Github Projeto
+https://github.com/patrickmonteiro/quasar-estoque-supabase
+
 A Quasar Project
 
 ## Install the dependencies

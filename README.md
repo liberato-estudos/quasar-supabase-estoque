@@ -166,3 +166,7 @@ vueRouterMode: 'hash', // available values: 'hash', 'history'
 
 Dialog
 https://quasar.dev/quasar-plugins/dialog
+
+
+Dependências
+- https://www.npmjs.com/package/uuid

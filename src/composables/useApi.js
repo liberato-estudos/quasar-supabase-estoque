@@ -8,7 +8,6 @@ export default function userApi() {
   const list = async (table) => {
     const { data, error } = await supabase.from(table).select();
 
-    console.log(table, data)
     if (error) throw error
     return data
   };

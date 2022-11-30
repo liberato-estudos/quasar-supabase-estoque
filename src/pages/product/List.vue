@@ -4,15 +4,23 @@
     <div class="row">
 
 
-      <q-table title="Category" :rows="categories" :columns="columnsCategory" row-key="id" class="col-12" :loading="loading"
-        sortBy="name">
+      <q-table title="Category" :rows="products" :columns="columnsProduct" row-key="id" class="col-12"
+        :loading="loading" sortBy="name">
 
         <template v-slot:top>
-          <span class="text-h6">Categoria</span>
+          <span class="text-h6">Produto</span>
           <q-space />
-          <q-btn v-if="$q.platform.is.desktop" label="Novo" color="primary" icon="mdi-plus" :to="{ name: 'form-category'}" />
+          <q-btn v-if="$q.platform.is.desktop" label="Novo" color="primary" icon="mdi-plus"
+            :to="{ name: 'form-product' }" />
+        </template>
 
-
+        <template v-slot:body-cell-img_url="props">
+          <q-td :props="props">
+            <q-avatar v-if="props.row.img_url">
+              <img :src="props.row.img_url">
+            </q-avatar>
+            <q-avatar v-else color="grey" text-color="white" icon="mdi-image-off" />
+          </q-td>
         </template>
 
         <template v-slot:body-cell-actions="props">
@@ -20,7 +28,7 @@
             <q-btn icon="mdi-pencil-outline" color="secondary" dense size="sm" @click="handleEdit(props.row)">
               <q-tooltip>Editar</q-tooltip>
             </q-btn>
-            <q-btn icon="mdi-delete-outline" color="negative" dense size="sm" @click="handleRemove(props.row)">
+            <q-btn icon="mdi-delete-outline" color="negative" dense size="sm" @click="handleRemoveProduct(props.row)">
               <q-tooltip>Apagar</q-tooltip>
             </q-btn>
 
@@ -29,7 +37,7 @@
       </q-table>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn v-if="$q.platform.is.mobile" fab icon="mdi-plus" color="primary" :to="{ name: 'form-category'}"/>
+      <q-btn v-if="$q.platform.is.mobile" fab icon="mdi-plus" color="primary" :to="{ name: 'form-product' }" />
     </q-page-sticky>
   </q-page>
 </template>
@@ -41,44 +49,44 @@ import useApi from 'src/composables/useApi';
 import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { columnsCategory } from './table'
+import { columnsProduct } from './table'
 
 
 
-const categories = ref([])
+const products = ref([])
 const loading = ref(true)
 const { list, remove } = useApi()
 const { notifyError, notifySuccess } = useNotify()
 const router = useRouter()
 const $q = useQuasar()
-const table = "category"
+const table = "product"
 
 
-const handleListCategories = async () => {
+const handleListProducts = async () => {
   try {
     loading.value = true
-    categories.value = await list(table)
+    products.value = await list(table)
     loading.value = false
   } catch (error) {
     notifyError(error.message)
   }
 }
 
-const handleEdit = (category) => {
-  router.push({ name: 'form-category', params: { id: category.id } })
+const handleEdit = (product) => {
+  router.push({ name: 'form-product', params: { id: product.id } })
 }
 
-const handleRemove = async (category) => {
+const handleRemoveProduct = async (product) => {
   try {
     $q.dialog({
       title: 'Confirm',
-      message: `Você quer realmente remover ${category.name}`,
+      message: `Você quer realmente remover ${product.name}`,
       cancel: true,
       persistent: true
     }).onOk(async () => {
-      await remove(table, category.id)
+      await remove(table, product.id)
       notifySuccess("Removido com sucesso")
-      handleListCategories()
+      handleListProducts()
     })
   } catch (error) {
     notifyError(error.message)
@@ -86,7 +94,7 @@ const handleRemove = async (category) => {
 }
 
 onMounted(() => {
-  handleListCategories()
+  handleListProducts()
 })
 
 </script>

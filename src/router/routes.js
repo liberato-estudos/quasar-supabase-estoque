@@ -26,6 +26,8 @@ const routes = [
       { path: 'me', name: 'me', component: () => import('pages/Me.vue') },
       { path: 'category', name: 'category', component: () => import('pages/category/List.vue') },
       { path: 'form-category/:id?', name: 'form-category', component: () => import('pages/category/Form.vue') }, // ? significa que pode ser opcional
+      { path: 'product', name: 'product', component: () => import('pages/product/List.vue') },
+      { path: 'form-product/:id?', name: 'form-product', component: () => import('pages/product/Form.vue') }, // ? significa que pode ser opcional
     ],
     meta: {
       requiresAuth: true

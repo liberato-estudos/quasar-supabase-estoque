@@ -1,0 +1,96 @@
+<template>
+  <q-page padding>
+    <div class="row justify-center">
+      <div class="col-12 text-center">
+        <p class="text-h6">
+          Formulário Produto
+        </p>
+      </div>
+      <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md" @submit.prevent="handleSubmit">
+        <q-input label="Nome" v-model="form.name" :rules="[val => (val && val.length > 0) || 'Nome é obrigatório']" />
+        <q-editor v-model="form.description" min-height="5rem" />
+        <q-input label="Quantidade" v-model="form.amount" :rules="[val => (val && val.length > 0) || 'Quantidade é obrigatório']" type="number" />
+        <q-input label="Preço" v-model="form.price" :rules="[val => (val && val.length > 0) || 'Preço é obrigatório']" prefix="R$" />
+
+        <q-select
+          v-model="form.category_id"
+          :options="optionsCategory"
+          label="Categoria"
+          option-value="id"
+          option-label="name"
+          map-options
+          emit-value
+        />
+
+        <q-btn :label="idUpdate ? 'Atualizar' : 'Salvar'" color="primary" class="full-width" rounded type="submit" />
+        <q-btn label="Cancelar" color="primary" class="full-width" rounded flat :to="{name: 'product'}" />
+      </q-form>
+    </div>
+
+  </q-page>
+
+</template>
+
+<script setup>
+import { ref, onMounted, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import useApi from 'src/composables/useApi';
+import useNotify from 'src/composables/UseNotify';
+
+const table = 'product'
+const router = useRouter()
+const route = useRoute()
+const { post, getById, update, list } = useApi()
+const { notifyError, notifySuccess } = useNotify()
+
+
+const form = ref({
+  name: '',
+  description: '',
+  amount: 0,
+  price: 0,
+  category_id: ''
+})
+
+const idUpdate = computed(() => route.params.id)
+
+onMounted(() => {
+  handleListCategories()
+  if (idUpdate.value) {
+    handleGetProduct(idUpdate.value)
+  }
+})
+
+
+const handleSubmit = async () => {
+  if (idUpdate.value) {
+    await update(table, form.value)
+    notifySuccess("Atualizado com sucesso")
+    router.push({name: 'product'})
+  } else {
+    try {
+      await post(table, form.value)
+      notifySuccess("Cadastrado com sucesso")
+      router.push({name: 'product'})
+    } catch (error) {
+      notifyError(error.message)
+    }
+  }
+}
+
+let product = {}
+let optionsCategory = ref([])
+const handleGetProduct = async (id) => {
+  try {
+    product = await getById(table, id)
+    form.value = product
+  } catch (error) {
+    notifyError(error.message)
+  }
+}
+
+const handleListCategories = async () => {
+  optionsCategory.value = await list('category')
+}
+
+</script>

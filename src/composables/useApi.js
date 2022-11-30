@@ -11,7 +11,15 @@ export default function userApi() {
 
     if (error) throw error
     return data
-  };
+  }
+
+  const listPublic = async (table, userId) => {
+    const { data, error } = await supabase.from(table).select().eq('user_id', userId);
+
+    if (error) throw error
+    return data
+  }
+
   const getById = async (table, id) => {
     const { data, error } = await supabase.from(table).select('*').eq('id', id);
     if (error) throw error
@@ -63,6 +71,7 @@ export default function userApi() {
     //   if (error) throw error
     // return publicURL
 
+    // deu diferença da versão 1 para 2 do supabase
     const { data } = supabase
       .storage
       .from(storage)
@@ -73,6 +82,7 @@ export default function userApi() {
 
   return {
     list,
+    listPublic,
     getById,
     post,
     update,

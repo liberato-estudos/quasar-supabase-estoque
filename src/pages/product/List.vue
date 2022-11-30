@@ -9,6 +9,16 @@
 
         <template v-slot:top>
           <span class="text-h6">Produto</span>
+          <q-btn
+            label="Minha Loja"
+            dense
+            size="sm"
+            outline
+            class="q-ml-sm"
+            icon="mdi-store"
+            color="primary"
+            @click="handleGoToStore"
+          />
           <q-space />
           <q-btn v-if="$q.platform.is.desktop" label="Novo" color="primary" icon="mdi-plus"
             :to="{ name: 'form-product' }" />
@@ -45,6 +55,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import useAuthUser from 'src/composables/UseAuthUser';
 import useApi from 'src/composables/useApi';
 import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router'
@@ -55,17 +66,19 @@ import { columnsProduct } from './table'
 
 const products = ref([])
 const loading = ref(true)
-const { list, remove } = useApi()
-const { notifyError, notifySuccess } = useNotify()
+
 const router = useRouter()
 const $q = useQuasar()
 const table = "product"
 
+const { listPublic, remove } = useApi()
+const { user } = useAuthUser()
+const { notifyError, notifySuccess } = useNotify()
 
 const handleListProducts = async () => {
   try {
     loading.value = true
-    products.value = await list(table)
+    products.value = await listPublic(table, user.value.id)
     loading.value = false
   } catch (error) {
     notifyError(error.message)
@@ -92,6 +105,12 @@ const handleRemoveProduct = async (product) => {
     notifyError(error.message)
   }
 }
+
+const handleGoToStore = () => {
+  const idUser = user.value.id
+  router.push({name: 'product-public', params:{ id: idUser }})
+}
+
 
 onMounted(() => {
   handleListProducts()

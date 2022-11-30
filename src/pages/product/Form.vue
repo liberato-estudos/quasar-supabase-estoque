@@ -9,8 +9,8 @@
       <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md" @submit.prevent="handleSubmit">
         <q-input label="Nome" v-model="form.name" :rules="[val => (val && val.length > 0) || 'Nome é obrigatório']" />
         <q-editor v-model="form.description" min-height="5rem" />
-        <q-input label="Quantidade" v-model="form.amount" :rules="[val => (val && val.length > 0) || 'Quantidade é obrigatório']" type="number" />
-        <q-input label="Preço" v-model="form.price" :rules="[val => (val && val.length > 0) || 'Preço é obrigatório']" prefix="R$" />
+        <q-input label="Quantidade" v-model="form.amount" :rules="[val => !!val || 'Quantidade é obrigatório']" type="number" />
+        <q-input label="Preço" v-model="form.price" :rules="[val => !!val || 'Preço é obrigatório']" prefix="R$" />
 
         <q-select
           v-model="form.category_id"
@@ -20,6 +20,7 @@
           option-label="name"
           map-options
           emit-value
+          :rules="[val => !!val || 'Categoria é obrigatório']"
         />
 
         <q-btn :label="idUpdate ? 'Atualizar' : 'Salvar'" color="primary" class="full-width" rounded type="submit" />

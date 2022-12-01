@@ -19,11 +19,19 @@
 <script setup>
 import { onMounted } from 'vue'
 import useBrand from 'src/composables/useBrand'
+import { useQuasar } from "quasar";
 
 const { getBrand } = useBrand()
+const $q = useQuasar()
 
-onMounted(() => {
-  getBrand()
+onMounted( async () => {
+  $q.loading.show({
+    backgroundColor: 'dark',
+  })
+
+  await getBrand()
+
+  $q.loading.hide()
 })
 
 

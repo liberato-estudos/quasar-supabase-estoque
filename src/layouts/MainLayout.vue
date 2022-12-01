@@ -79,8 +79,14 @@ const linksList = [
 
 ]
 
-onMounted(() => {
-  getBrand()
+onMounted( async () => {
+  $q.loading.show({
+        backgroundColor: 'dark',
+  })
+
+  await getBrand()
+
+  $q.loading.hide()
 })
 
 const leftDrawerOpen = ref(false)
@@ -107,10 +113,3 @@ const toggleLeftDrawer = () => {
 
 </script>
 
-
-<style scoped>
-.menu-ativo {
-  color: blue
-
-}
-</style>

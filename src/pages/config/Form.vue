@@ -60,7 +60,7 @@ const router = useRouter()
 
 const { post, list, update } = useApi()
 const { notifyError, notifySuccess } = useNotify()
-const { setBrand } = useBrand()
+const { setBrand, getBrand } = useBrand()
 
 const table = 'config'
 let config = {}
@@ -98,8 +98,11 @@ const handleSubmit = async () => {
 
 const handleGetConfig = async () => {
   try {
-    config = await list(table)
-    form.value = config[0]
+
+    const brand = await getBrand()
+    form.value = brand
+
+
   } catch (error) {
     notifyError(error.message)
   }

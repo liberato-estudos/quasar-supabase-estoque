@@ -26,12 +26,12 @@ export default function useBrand(){
   }
 
   const getBrand = async () => {
-    const id = user?.value?.id || route.params.id
+    const id = route.params.id || user?.value?.id
 
     if (id) {
-      $q.loading.show({
-        backgroundColor: 'dark',
-      })
+      // $q.loading.show({
+      //   backgroundColor: 'dark',
+      // })
       try{
         const data = await listPublic('config', id)
 
@@ -43,14 +43,16 @@ export default function useBrand(){
       }catch(error){
         throw error
       }
-      $q.loading.hide()
-      return brand
+      // $q.loading.hide()
+      return brand.value
     }
   }
 
   return {
+    brand,
     setBrand,
-    getBrand
+    getBrand,
+
   }
 
 }

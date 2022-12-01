@@ -31,6 +31,7 @@
       <q-card-actions align="right">
         <q-btn label="Cancelar" color="primary" outline v-close-popup />
         <q-btn
+          v-if="brand.phone"
           label="Fazer pedido"
           icon="mdi-whatsapp"
           color="green-7"
@@ -46,6 +47,7 @@
 <script setup>
 import { formatCurrency } from 'src/utils/format';
 import { openURL } from 'quasar';
+import useBrand from 'src/composables/useBrand';
 
 const props = defineProps({
   show: {
@@ -56,6 +58,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['hideDialog'])
 
+const { brand } = useBrand()
 
 const handleClose = () => {
 
@@ -64,9 +67,9 @@ const handleClose = () => {
 }
 
 const handleSendWhats = () => {
-  const phone = '44998812832'
+
   const msg = 'Olá, fiquei interessado no produto: '
-  const link = encodeURI(`https://api.whatsapp.com/send?phone=55${phone}&text=${msg} - ${props.product.name} - ${formatCurrency(props.product.price)}`)
+  const link = encodeURI(`https://api.whatsapp.com/send?phone=55${brand.value.phone}&text=${msg} - ${props.product.name} - ${formatCurrency(props.product.price)}`)
   openURL(link)
 }
 

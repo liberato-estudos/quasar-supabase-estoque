@@ -1,6 +1,12 @@
 <template>
   <q-page padding>
 
+    <div class="row" v-if="brand.name">
+      <div class="col-12 text-center text-h4">
+        {{ brand.name }}
+      </div>
+    </div>
+
     <div class="row">
 
 
@@ -66,6 +72,7 @@ import useNotify from 'src/composables/UseNotify';
 import { columnsProduct } from './table'
 import { formatCurrency } from 'src/utils/format'
 import DialogProductDetails from 'components/DialogProductDetails.vue';
+import useBrand from 'src/composables/useBrand';
 
 
 
@@ -75,6 +82,7 @@ const filter = ref('')
 const table = "product"
 const showDialogDetails = ref(false)
 const productDetails = ref({})
+const  { brand } = useBrand()
 
 const { listPublic } = useApi()
 const { notifyError } = useNotify()

@@ -44,18 +44,19 @@
 </template>
 
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useRouter } from 'vue-router'
 import useAuthUser from 'src/composables/UseAuthUser'
+import useBrand from 'src/composables/useBrand'
 
 const linksList = [
 {
     title: 'Home',
     caption: '',
     icon: 'mdi-home',
-    routeName: 'me'
+    routeName: 'home'
   },
   {
     title: 'Categoria',
@@ -78,11 +79,15 @@ const linksList = [
 
 ]
 
+onMounted(() => {
+  getBrand()
+})
 
 const leftDrawerOpen = ref(false)
 const $q = useQuasar()
 const router = useRouter()
 const { logout } = useAuthUser()
+const { getBrand } = useBrand()
 
 const handleLogout = async () => {
   $q.dialog({

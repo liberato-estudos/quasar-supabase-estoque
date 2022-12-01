@@ -114,18 +114,31 @@ const handleSubmit = async () => {
     form.value.img_url = imgUrl
   }
 
-  if (idUpdate.value) {
-    await update(table, form.value)
-    notifySuccess("Atualizado com sucesso")
-    router.push({name: 'product'})
-  } else {
-    try {
+
+  // if (idUpdate.value) {
+  //   await update(table, form.value)
+  //   notifySuccess("Atualizado com sucesso")
+  //   router.push({name: 'product'})
+  // } else {
+  //   try {
+  //     await post(table, form.value)
+  //     notifySuccess("Cadastrado com sucesso")
+  //     router.push({name: 'product'})
+  //   } catch (error) {
+  //     notifyError(error.message)
+  //   }
+  // }
+  try {
+    if (idUpdate.value) {
+      await update(table, form.value)
+      notifySuccess("Atualizado com sucesso")
+    } else {
       await post(table, form.value)
       notifySuccess("Cadastrado com sucesso")
-      router.push({name: 'product'})
-    } catch (error) {
-      notifyError(error.message)
     }
+    router.push({name: 'product'})
+  } catch (error) {
+    notifyError(error.message)
   }
 }
 

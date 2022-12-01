@@ -71,18 +71,18 @@ const validacaoPassword = [val => (val && val.length >= 6) || 'A senha precisa t
 
 
 
-onMounted(() => {
-  if (isLoggedIn) {
-    router.push({ name: 'me' })
-  }
-})
+// onMounted(() => {
+//   if (isLoggedIn) {
+//     router.push({ name: 'home' })
+//   }
+// })
 
 const handleLogin = async () => {
   try {
 
     await login(form.value)
     notifySuccess('Autenticado com sucesso!')
-    router.push({ name: 'me' })
+    router.push({ name: 'home' })
   } catch (error) {
     notifyError(error.message)
 

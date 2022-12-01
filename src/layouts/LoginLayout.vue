@@ -8,7 +8,7 @@
       </q-toolbar>
     </q-header>
 
-    
+
 
     <q-page-container>
       <router-view />
@@ -16,17 +16,16 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { onMounted } from 'vue'
+import useBrand from 'src/composables/useBrand'
 
+const { getBrand } = useBrand()
 
-export default defineComponent({
-  name: 'LoginLayout',
-
-  setup () {
-    return {
-
-    }
-  }
+onMounted(() => {
+  getBrand()
 })
+
+
+
 </script>

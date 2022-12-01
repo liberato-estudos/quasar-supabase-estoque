@@ -16,7 +16,7 @@ const routes = [
     beforeEnter: (to, from) => {
       const { isLoggedIn } = useAuthUser()
       if (isLoggedIn()) {
-        return { name: 'me' }
+        return { name: 'home' }
       }
     }
   },
@@ -31,11 +31,12 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: 'me', name: 'me', component: () => import('pages/Me.vue') },
+      { path: 'home', name: 'home', component: () => import('pages/Home.vue') },
       { path: 'category', name: 'category', component: () => import('pages/category/List.vue') },
       { path: 'form-category/:id?', name: 'form-category', component: () => import('pages/category/Form.vue') }, // ? significa que pode ser opcional
       { path: 'product', name: 'product', component: () => import('pages/product/List.vue') },
       { path: 'form-product/:id?', name: 'form-product', component: () => import('pages/product/Form.vue') }, // ? significa que pode ser opcional
+      { path: 'form-config/:id?', name: 'form-config', component: () => import('pages/config/Form.vue') },
     ],
     meta: {
       requiresAuth: true

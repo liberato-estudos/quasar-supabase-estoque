@@ -1,10 +1,12 @@
 import useSupabase from "src/boot/supabase";
 import useAuthUser from "./UseAuthUser";
 import { v4 as uuidv4 } from 'uuid';
+import { useRoute } from "vue-router";
 
 export default function userApi() {
   const  { supabase } = useSupabase()
   const { user } = useAuthUser()
+  const route = useRoute()
 
   const list = async (table) => {
     const { data, error } = await supabase.from(table).select();
@@ -78,6 +80,16 @@ export default function userApi() {
       .getPublicUrl(filename)
     return data.publicUrl
 
+  }
+
+  const getBrand = async () => {
+    const id = user?.value?.id || route.params.id
+
+    if (id){
+      const { data, error } = await supabase.from('brand').select().eq('user_id', id)
+      if (error) throw error
+      return data[0]
+    }
   }
 
   return {

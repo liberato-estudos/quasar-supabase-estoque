@@ -41,23 +41,26 @@ import useApi from 'src/composables/useApi';
 import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+import useAuthUser from 'src/composables/UseAuthUser';
 import { columnsCategory } from './table'
 
 
 
 const categories = ref([])
 const loading = ref(true)
-const { list, remove } = useApi()
+
+const table = "category"
+const { listPublic, remove } = useApi()
 const { notifyError, notifySuccess } = useNotify()
+const { user } = useAuthUser()
 const router = useRouter()
 const $q = useQuasar()
-const table = "category"
 
 
 const handleListCategories = async () => {
   try {
     loading.value = true
-    categories.value = await list(table)
+    categories.value = await listPublic(table, user.value.id)
     loading.value = false
   } catch (error) {
     notifyError(error.message)

@@ -7,8 +7,22 @@
       </div>
     </div>
 
-    <div class="row">
+      <div class="row">
 
+      <!--
+        map-options:
+       -->
+      <q-select
+        outlined
+        v-model="categoryId"
+        :options="optionsCategories"
+        label="Categoria"
+        option-label="name"
+        option-id="id"
+        clearable
+        class="col-xs-12 col-sm-4"
+        @update:model-value="handleListProducts(route.params.id)"
+      />
 
       <q-table
         title="Category"
@@ -76,22 +90,24 @@ import useBrand from 'src/composables/useBrand';
 
 
 
+const table = "product"
 const products = ref([])
 const loading = ref(true)
 const filter = ref('')
-const table = "product"
 const showDialogDetails = ref(false)
 const productDetails = ref({})
-const  { brand } = useBrand()
+const optionsCategories = ref([])
+const categoryId = ref('')
 
+const route = useRoute()
 const { listPublic } = useApi()
 const { notifyError } = useNotify()
-const route = useRoute()
+const  { brand } = useBrand()
 
 const handleListProducts = async (userId) => {
   try {
     loading.value = true
-    products.value = await listPublic(table, userId)
+    products.value = categoryId.value ? await listPublic(table, userId, 'category_id', categoryId.value.id) : await listPublic(table, userId)
     loading.value = false
   } catch (error) {
     notifyError(error.message)
@@ -103,8 +119,14 @@ const handleShowDetails = (product) => {
   showDialogDetails.value = true
 }
 
+const handleListCategories = async (userId) => {
+  optionsCategories.value = await listPublic('category', userId)
+
+}
+
 onMounted(() => {
   if (route.params.id){
+    handleListCategories(route.params.id)
     handleListProducts(route.params.id)
   }
 })

@@ -3,7 +3,6 @@
     clickable
     :to="{ name: routeName }"
     exact
-    active-class="my-menu-link"
   >
     <q-item-section
       v-if="icon"

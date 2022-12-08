@@ -26,6 +26,19 @@ export default function userApi() {
     return data
   }
 
+  const fetchCount = async (table, userId) => {
+    const { data, error, count } = await supabase
+      .from(table)
+      .select('*', { count: 'exact' })
+
+
+    if (error) throw error
+    return {
+      data,
+      count
+    }
+  }
+
   const getById = async (table, id) => {
     const { data, error } = await supabase.from(table).select('*').eq('id', id);
     if (error) throw error
@@ -104,6 +117,7 @@ export default function userApi() {
     update,
     remove,
     uploadImg,
-    getUrlPublic
+    getUrlPublic,
+    fetchCount
   };
 }

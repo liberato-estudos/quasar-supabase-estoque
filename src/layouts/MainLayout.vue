@@ -8,6 +8,7 @@
           Produtos Estoque
         </q-toolbar-title>
 
+        <dark-toggle-mode />
         <q-btn-dropdown flat color="white" icon="person">
           <q-list>
             <q-item clickable v-close-popup @click="handleLogout">
@@ -50,6 +51,8 @@ import EssentialLink from 'components/EssentialLink.vue'
 import { useRouter } from 'vue-router'
 import useAuthUser from 'src/composables/UseAuthUser'
 import useBrand from 'src/composables/UseBrand'
+
+import DarkToggleMode from 'src/components/DarkToggleMode.vue'
 
 const linksList = [
 {

@@ -19,6 +19,13 @@
           mask="(##) #####-####"
           unmasked-value
         />
+        <q-input
+          label="Imagem Parallax"
+          stack-label
+          v-model="paralax"
+          type="file"
+          accept="image/*"
+        />
 
         <div class="row justify-center q-gutter-md q-pa-md" >
             <q-color v-model="form.primary" class="col-md-4 col-sm-12 col-xs-12"/>
@@ -58,18 +65,20 @@ import useBrand from 'src/composables/useBrand';
 
 const router = useRouter()
 
-const { post, list, update } = useApi()
+const { post, update, uploadImg } = useApi()
 const { notifyError, notifySuccess } = useNotify()
 const { setBrand, getBrand } = useBrand()
 
 const table = 'config'
 let config = {}
+const paralax = ref([])
 
 const form = ref({
   name: '',
   phone:'',
   primary:'',
   secondary:'',
+  paralax_url:''
 })
 
 onMounted(() => {
@@ -79,6 +88,11 @@ onMounted(() => {
 
 const handleSubmit = async () => {
   try {
+    if (paralax.value.length > 0){
+      const paralaxUrl = await uploadImg(paralax.value[0], 'paralax') // products é o nome do storage
+      form.value.paralax_url = paralaxUrl
+    }
+
     if (form.value.id) { // se existir estou fazendo um update
       await update(table, form.value)
       notifySuccess("Atualizado com sucesso")

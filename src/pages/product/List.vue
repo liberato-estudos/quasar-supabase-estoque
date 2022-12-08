@@ -66,7 +66,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import useAuthUser from 'src/composables/UseAuthUser';
-import useApi from 'src/composables/useApi';
+import useApi from 'src/composables/UseApi';
 import useNotify from 'src/composables/UseNotify';
 import { useRouter } from 'vue-router'
 import { useQuasar, openURL, copyToClipboard } from 'quasar'

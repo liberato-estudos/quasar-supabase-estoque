@@ -95,13 +95,13 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import useApi from 'src/composables/useApi';
+import useApi from 'src/composables/UseApi';
 import { useRoute } from 'vue-router';
 import useNotify from 'src/composables/UseNotify';
 import { columnsProduct, initialPagination } from './table'
 import { formatCurrency } from 'src/utils/format'
 import DialogProductDetails from 'components/DialogProductDetails.vue';
-import useBrand from 'src/composables/useBrand';
+import useBrand from 'src/composables/UseBrand';
 
 
 

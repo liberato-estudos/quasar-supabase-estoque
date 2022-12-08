@@ -49,7 +49,7 @@ import { useQuasar } from 'quasar'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useRouter } from 'vue-router'
 import useAuthUser from 'src/composables/UseAuthUser'
-import useBrand from 'src/composables/useBrand'
+import useBrand from 'src/composables/UseBrand'
 
 const linksList = [
 {

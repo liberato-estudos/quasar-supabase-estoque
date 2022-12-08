@@ -59,9 +59,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import useApi from 'src/composables/useApi';
+import useApi from 'src/composables/UseApi';
 import useNotify from 'src/composables/UseNotify';
-import useBrand from 'src/composables/useBrand';
+import useBrand from 'src/composables/UseBrand';
 
 const router = useRouter()
 

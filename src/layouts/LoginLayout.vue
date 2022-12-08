@@ -18,7 +18,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import useBrand from 'src/composables/useBrand'
+import useBrand from 'src/composables/UseBrand'
 import { useQuasar } from "quasar";
 
 const { getBrand } = useBrand()

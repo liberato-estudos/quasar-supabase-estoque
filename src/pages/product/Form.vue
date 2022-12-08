@@ -77,7 +77,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import useApi from 'src/composables/useApi';
+import useApi from 'src/composables/UseApi';
 import useNotify from 'src/composables/UseNotify';
 import useAuthUser from 'src/composables/UseAuthUser';
 

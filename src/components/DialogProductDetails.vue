@@ -47,7 +47,7 @@
 <script setup>
 import { formatCurrency } from 'src/utils/format';
 import { openURL } from 'quasar';
-import useBrand from 'src/composables/useBrand';
+import useBrand from 'src/composables/UseBrand';
 
 const props = defineProps({
   show: {

@@ -79,12 +79,14 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import useApi from 'src/composables/useApi';
 import useNotify from 'src/composables/UseNotify';
+import useAuthUser from 'src/composables/UseAuthUser';
 
 const table = 'product'
 const router = useRouter()
 const route = useRoute()
-const { post, getById, update, list, uploadImg } = useApi()
+const { post, getById, update, listPublic, uploadImg } = useApi()
 const { notifyError, notifySuccess } = useNotify()
+const { user } = useAuthUser()
 
 let product = {}
 const optionsCategory = ref([])
@@ -153,7 +155,7 @@ const handleGetProduct = async (id) => {
 }
 
 const handleListCategories = async () => {
-  optionsCategory.value = await list('category')
+  optionsCategory.value = await listPublic('category', user.value.id)
 }
 
 </script>

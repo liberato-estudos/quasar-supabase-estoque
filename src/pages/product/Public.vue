@@ -25,15 +25,15 @@
       />
 
       <q-table
-        title="Category"
         :rows="products"
         :columns="columnsProduct"
+        v-model:pagination="initialPagination"
         row-key="id"
         class="col-12"
         :loading="loading"
-        sortBy="name"
-        grid
         :filter="filter"
+        grid
+        hide-pagination
       >
 
         <template v-slot:top>
@@ -64,9 +64,17 @@
         </template>
 
       </q-table>
-
+    </div>
+    <div class="row justify-center">
+      <q-pagination
+        v-model="initialPagination.page"
+        :max="pagesNumber"
+        direction-links
+        @update:model-value="handleScrollToTop"
+      />
     </div>
     <dialog-product-details
+      v-model="initialPagination.page"
       :show="showDialogDetails"
       :product="productDetails"
       @hide-dialog="showDialogDetails = false"
@@ -79,11 +87,11 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import useApi from 'src/composables/useApi';
 import { useRoute } from 'vue-router';
 import useNotify from 'src/composables/UseNotify';
-import { columnsProduct } from './table'
+import { columnsProduct, initialPagination } from './table'
 import { formatCurrency } from 'src/utils/format'
 import DialogProductDetails from 'components/DialogProductDetails.vue';
 import useBrand from 'src/composables/useBrand';
@@ -124,11 +132,23 @@ const handleListCategories = async (userId) => {
 
 }
 
+const handleScrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+
 onMounted(() => {
   if (route.params.id){
     handleListCategories(route.params.id)
     handleListProducts(route.params.id)
   }
 })
+
+const pagesNumber = computed(() =>
+  Math.ceil(products.value.length / initialPagination.value.rowsPerPage)
+)
+
+
+
 
 </script>

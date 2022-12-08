@@ -5,7 +5,7 @@
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          Produtos
+          Produtos Estoque
         </q-toolbar-title>
 
         <q-btn-dropdown flat color="white" icon="person">
